@@ -1,40 +1,40 @@
-*{
-    margin: 0%;
-    padding: 0%;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
-body{
+body {
     min-height: 100vh;
     background: linear-gradient(135deg, #4A90E2, #9013FE);
-    padding: 20px 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-h1{
+.todo-list-body {
+    width: 90%;
+    max-width: 500px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
     text-align: center;
     color: #333;
     margin-bottom: 15px;
 }
-.todo-list-body{
-    min-height: 100px;
-    width: 40%;
-    background: #fff;
-    padding: 20px 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin: auto;
-}
-.todo-list-append{
-    position: relative;
+.todo-list-append {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
 }
-.todo-list-append input{
+.todo-list-append input {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.9rem;
+    border-radius: 6px;
     border: 2px solid #4A90E2;
     outline: none;
     transition: border-color 0.3s;
@@ -42,50 +42,43 @@ h1{
 .todo-list-append input:focus {
     border-color: #9013FE;
 }
-
-.todo-list-append button{
-    position: absolute;
-    top: 0%;
-    cursor: pointer;
-    right: 0%;
+.todo-list-append button {
     background: #4A90E2;
     color: #fff;
     border: none;
-    padding: 16px 20px;
-    border-radius: 8px;
+    padding: 10px;
+    border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s;
+    width: 100%;
 }
 .todo-list-append button:hover {
     background: #9013FE;
 }
-.activity{
+.activity {
     display: block;
     font-size: 18px;
     font-weight: bold;
     margin: 15px 0;
     color: #333;
 }
-ol{
+ol {
     list-style: none;
     padding: 0;
 }
-li{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.li-activity {
     background: #f8f8f8;
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.inside-activity{
-    font-size: 16px;
-    color: #333;
+.topHolder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-ol button{
+.clear-activity {
     background: #FF3B30;
     color: #fff;
     border: none;
@@ -94,6 +87,22 @@ ol button{
     cursor: pointer;
     transition: background 0.3s;
 }
-ol button:hover{
+.clear-activity:hover {
     background: #CC2200;
+}
+.countdown {
+    display: block;
+}
+@media (max-width: 600px) {
+    .todo-list-body {
+        width: 100%;
+        padding: 15px;
+    }
+    .topHolder span {
+        font-size: 0.9rem;
+        width: 70%;
+    }
+    .bottomHolder span {
+        font-size: 0.8rem;
+    }
 }

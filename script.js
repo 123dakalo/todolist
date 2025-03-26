@@ -1,29 +1,33 @@
 const olActivityEl = document.querySelector('.ol-activity');
-const button = document.querySelector('.btn-add');
-const timeEl = document.querySelector('#time');
-const appendFuction = document.querySelector('form');
+const appendFunction = document.querySelector('form');
 const inputField = document.querySelector('.input');
+const timeEl = document.querySelector('#time');
 
 olActivityEl.addEventListener('click', function (event) {
     if (event.target.classList.contains('clear-activity')) {
-        event.target.parentNode.remove();
+        event.target.closest('.li-activity').remove();
+        saveInfo();
     }
-
-    saveInfo();
 });
 
-appendFuction.addEventListener('submit', function (event) {
+appendFunction.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const valuesIn = inputField.value;
-    const timeIn = timeEl.value;
-    const deadline = new Date(timeIn).getTime();
+    const valuesIn = inputField.value.trim();
+    const timeIn = timeEl.value.trim();
+    if (!valuesIn || !timeIn) return; // Prevent empty inputs
+
+    const deadline = new Date(timeIn).getTime(); 
 
     const innerHtml = `
         <li class="li-activity">
-            <span class="inside-activity">${valuesIn}</span>
-            <span class="countdown" data-deadline="${deadline}">${timeIn}</span>
-            <button class="clear-activity">x</button>
+            <div class="topHolder">
+                <span class="inside-activity">${valuesIn}</span>
+                <button class="clear-activity">x</button>
+            </div>
+            <div class="bottomHolder">
+                <span class="countdown" data-deadline="${deadline}">${timeIn}</span>
+            </div>
         </li>
     `;
 
@@ -37,34 +41,30 @@ appendFuction.addEventListener('submit', function (event) {
 });
 
 function Countdowns() {
-    const countDown = document.querySelectorAll(".countdown");
+    const countDownEls = document.querySelectorAll(".countdown");
 
-    countDown.forEach(timeEl =>{
-        const targetDate = parseInt(timeEl.dataset.deadline);
+    countDownEls.forEach(timeEl => {
+        const targetDate = Number(timeEl.dataset.deadline); // Convert string back to number
         const currentDate = new Date().getTime();
         const timeLeft = targetDate - currentDate;
 
-        if(timeLeft <= 0){
+        if (isNaN(targetDate)) return; // Skip if deadline is invalid
 
-            timeEl.innerHTML = "Times up!";
+        if (timeLeft <= 0) {
+            timeEl.innerHTML = "Time's up!";
             timeEl.style.color = "red";
-            timeEl.style.fontWeight = "Bold";
+            timeEl.style.fontWeight = "bold";
+        } else {
+            const days = Math.floor(timeLeft / 1000 / 60 / 60 / 24);
+            const hours = Math.floor(timeLeft / 1000 / 60 / 60) % 24;
+            const minutes = Math.floor(timeLeft / 1000 / 60) % 60;
+            const seconds = Math.floor(timeLeft / 1000) % 60;
 
-        }else{
-
-            const days = Math.floor(timeLeft/1000/60/60/24);
-            const hours = Math.floor(timeLeft/1000/60/60) % 24;
-            const minutes = Math.floor(timeLeft/1000/60) % 60;
-            const seconds = Math.floor(timeLeft/1000) % 60;
-
-            timeEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s `;
-
-            // if (minutes <= 5 && minutes >= 0) {
-            //     alert(`Hurry! is about to expire in ${minutes}m !`);
-            // }
+            timeEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
     });
 }
+
 setInterval(Countdowns, 1000);
 
 function saveInfo() {
@@ -73,7 +73,8 @@ function saveInfo() {
 
 function savedInfo() {
     olActivityEl.innerHTML = localStorage.getItem('data') || "";
+    // Restore event listeners for the countdown after reloading
     Countdowns();
 }
-savedInfo();
 
+savedInfo();
