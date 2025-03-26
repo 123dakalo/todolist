@@ -81,6 +81,9 @@ ol {
     justify-content: space-between;
     align-items: center;
 }
+.inside-activity{
+    font-size: 1.05rem;
+}
 .clear-activity {
     background: #FF3B30;
     color: #fff;
