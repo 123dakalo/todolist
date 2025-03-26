@@ -51,7 +51,7 @@ function Countdowns() {
             timeEl.innerHTML = "Time's up!";
             timeEl.style.color = "red";
             timeEl.style.fontWeight = "bold";
-            timeEl.style.fontSize = "1rem";
+            timeEl.style.fontSize = "1rem"
         } else {
             const days = Math.floor(timeLeft / 1000 / 60 / 60 / 24);
             const hours = Math.floor(timeLeft / 1000 / 60 / 60) % 24;
